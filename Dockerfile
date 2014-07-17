@@ -1,21 +1,17 @@
-# VERSION 0.2
-# DOCKER-VERSION 0.3.4
-# To build:
-# 1. Install docker (http://docker.io)
-# 2. Checkout source: git@github.com:gasi/docker-node-hello.git
-# 3. Build container: docker build .
+# DOCKER-VERSION 0.10.0
+# To build container: docker build .
 
-FROM    centos:6.4
+FROM ubuntu:13.10
 
-# Enable EPEL for Node.js
-RUN     rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-# Install Node.js and npm
-RUN     yum install -y npm
+# make sure apt is up to date
+RUN apt-get update
+
+# install nodejs and npm
+RUN apt-get install -y nodejs npm git git-core
 
 # App
 ADD . /src
 # Install app dependencies
 RUN cd /src; npm install
 
-EXPOSE  3000
-CMD ["node", "/src/app.js"]
+EXPOSE  9008
